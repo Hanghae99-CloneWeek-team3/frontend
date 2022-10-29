@@ -1,10 +1,11 @@
 # Clone coding : Pinterest
+## 📌 S.A
+https://www.notion.so/3-3634a4bbc8bb422fb147b96e99db10e1
 
 ## 📌 팀원소개
 - 김민주 : https://github.com/roses16-dev
 - 김정은 : https://github.com/mingki831
 - 홍마로 : https://github.com/formaro
-
 
 ## 📌 기능
 - Pin CRUD
