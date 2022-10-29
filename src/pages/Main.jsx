@@ -1,5 +1,13 @@
-export default function Main(){
+import React from 'react';
+import LoginHeader from '../components/login/LoginHeader'
 
+const Main = () => {
+  return (
+    <div>
+      <LoginHeader/>
+      Main
+    </div>
+  );
+};
 
-  return <h1>Main</h1>
-}
+export default Main;
