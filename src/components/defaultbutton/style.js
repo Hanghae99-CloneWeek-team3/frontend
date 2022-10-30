@@ -5,7 +5,6 @@ export const DivButton = styled.div`
   align-items: center;
 
   height: 43px;
-  margin-top: 15px;
   padding: 12px 16px;
 
   border: none;
