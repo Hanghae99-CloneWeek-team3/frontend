@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const DivDropDownBox = styled.div`
   visibility: ${props => props.isOpen? 'visible': 'hidden' };
@@ -9,18 +9,29 @@ export const DivDropDownBox = styled.div`
   min-height: 40px;
   width: ${props => props.size};
 
-  z-index: 2px;
+  z-index: 2;
   border-radius: 16px;
   padding: 8px;
   background-color: #fff;
   box-shadow: 0px 0px 10px 0px #ccc;
   color: #000;
+  
+`
+export const DivMenuLine = styled.div`
+  div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: stretch;
+    align-items: stretch;
+  }
   &:first-child {
     margin-top: 0px;
   }
 `
 
 export const DivMenuBox = styled.div`
+  width: 100%;
   min-height: 35px;
   border-radius: 8px;
   text-align: left;
@@ -29,6 +40,7 @@ export const DivMenuBox = styled.div`
 
   display: flex;
   align-items: center;
+  text-align: left;
 
   font-family: segoe-ui;
   font-weight: 600;
@@ -47,5 +59,4 @@ export const DivCategoryBox = styled.div`
   text-align: left;
   padding-left: 8px;
   line-height: 32px;
-
 `
