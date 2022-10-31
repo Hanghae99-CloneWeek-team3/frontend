@@ -49,23 +49,6 @@ export const DivSearchInputBox = styled.div`
     border: none;
   }
 `
-
-export const DivIconBox = styled.div`
-  width: ${props => props.size};
-  height: ${props => props.size};
-  border-radius: 25px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  position: relative;
-
-  &:hover{
-    background-color: rgb(233, 233, 233);
-  }  
-`
-
 export const DivTextBox = styled.div`
   position: relative;
   font-family: segoe-ui;
@@ -88,11 +71,29 @@ export const DivTextBox = styled.div`
 
 export const DivProfileBox = styled.div`
   display: flex;
+  flex-direction: row;
   align-items: center;
-  padding: 8px;
+  padding: 5px;
 
   .infoBox{
     width: 150px;
-    margin-left: 5px;
+    margin-left: 10px;
   }
+`
+
+export const DivIconBox = styled.div`
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: ${props => props.size}px;
+  height: ${props => props.size}px;
+  
+  border-radius: ${props => props.size/2}px;
+
+  &:hover{
+    background-color: rgb(233, 233, 233);
+  }  
 `
