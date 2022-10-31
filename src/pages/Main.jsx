@@ -8,7 +8,7 @@ import 'swiper/css';
 import "swiper/css/mousewheel";
 import "swiper/css/keyboard";
 
-import "../shared/main.css"
+import "../pages/main.css"
 
 const Main = () => {
   return (
