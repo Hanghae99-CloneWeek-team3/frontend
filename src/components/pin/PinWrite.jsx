@@ -1,94 +1,86 @@
 import axios from 'axios';
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { __uploadPin } from '../../redux/module/PinSlice';
-import ProfileImage from '../profileimage/ProfileImage';
+import { useCookies } from 'react-cookie';
+import useInput from '../../hook/useInput';
+import { useState } from 'react';
 import {
   PinWriteBox,
-  AddPinContainer,
-  PinIconContainer,
-  UploadImgContainer,
-  ShowPin,
+  AddPinBox,
+  SaveButton,
+  PinIcon,
+  LeftSection,
+  DotsIcon,
+  ImageUploadBox,
+  DottedBox,
   PinImage,
-  LeftSide,
-  LeftSection1,
-  LeftSection2,
-  LeftSection3,
-  RightSide,
-  RightSection1,
-  Selectboard,
-  SavePin,
-  RightSection2,
   DragAndClick,
   Recommendation,
+  SaveFromSiteBtn,
+  RightSection,
+  SaveContainer,
+  Selectboard,
+  InputContainer,
   AddSubTextButton,
   RendingPageLink,
 } from './PinWriteStyle';
+import ProfileImage from '../profileimage/ProfileImage';
+import { useNavigate } from 'react-router-dom';
 
-const uploadImg = (event, image, setImage, setShowLabel, setShowPin) => {
-  // 미리보기
-  if (event.target.files && event.target.files[0]) {
-    if (/image\/*/.test(event.target.files[0].type)) {
-      const reader = new FileReader();
-      // console.log(reader);
-      reader.onload = function () {
-        setImage({
-          ...image,
-          imageUrl: reader.result,
-        });
-        setShowLabel(false);
-        setShowPin(true);
-      };
-      reader.readAsDataURL(event.target.files[0]);
-    }
-  }
-};
-// 텍스트 값 데이터를 받아와야 된다.
-// 이미지 데이터를 받아와야 된다.
+export default function PinWriteTest() {
+  const [cookie, setCookie] = useCookies();
+  const [title, titleHandler] = useInput();
+  const [content, cententHandler] = useInput();
+  const [writeImage, setwriteImage] = useState();
+  const [fileId, setFileId] = useState();
+  // 네비게이트 선언
+  const navigate = useNavigate();
 
-const PinWrite = () => {
-  const dispatch = useDispatch();
   const formData = new FormData();
 
-  const [showLabel, setShowLabel] = useState(true);
-  const [showPin, setShowPin] = useState(false);
-  const [image, setImage] = useState({ file: '' });
-  const [savePin, setSavePin] = useState({
-    title: '',
-    content: '',
-  });
-
   function setFile(event) {
-    setImage(event.target);
+    console.log(event.target.files);
     formData.append('file', event.target.files[0]);
+
+    axios.defaults.headers['Authorization'] = cookie['access_token'];
+    axios.defaults.headers['refresh_token'] = cookie['refresh_token'];
+    axios.defaults.headers['Content-Type'] = 'multipart/form-data';
+
+    axios
+      .post('http://13.209.98.109:8080/api/posts/image', formData)
+      .then((res) => {
+        console.log(res);
+        setwriteImage(res.data.data.imageUrl);
+        setFileId(res.data.data.fileId);
+        console.log(typeof res.data.data.imageUrl);
+      });
   }
-  console.log(image);
 
-  // function postFile(event) {
-  //   setImage();
-  //   // axios.defaults.headers['Authorization'] = cookie['access_token'];
-  //   // axios.defaults.headers['refresh_token'] = cookie['refresh_token'];
-  //   axios.defaults.headers['Content-Type'] = 'multipart/form-data';
-  //   axios.post('http://43.200.170.147:8080/api/posts/image', formData);
-  // }
+  function writeHandler() {
+    const temp = {
+      title: title,
+      content: content,
+      imageUrl: writeImage,
+      fileId: fileId,
+    };
+    console.log(temp);
 
-  const postFile = () => {};
+    axios.defaults.headers['Authorization'] = cookie['access_token'];
+    axios.defaults.headers['refresh_token'] = cookie['refresh_token'];
+    axios.defaults.headers['Content-Type'] = 'application/json';
 
-  const onChangeHandler = (event) => {
-    setSavePin(event.target.value);
-  };
-  console.log(savePin);
+    axios.post('http://13.209.98.109:8080/api/posts', temp).then((res) => {
+      console.log(res);
+      if (res.data.success) {
+        navigate('/totallist');
+      }
+    });
+  }
 
   return (
-    <PinWriteBox
-      onSubmit={(event) => {
-        event.preventDefault();
-      }}
-    >
-      <AddPinContainer>
-        <LeftSide>
-          <LeftSection1>
-            <PinIconContainer>
+    <PinWriteBox>
+      <AddPinBox>
+        <LeftSection>
+          <DotsIcon>
+            <PinIcon>
               <svg
                 height="18"
                 width="18"
@@ -102,101 +94,81 @@ const PinWrite = () => {
                   fill="#767676"
                 ></path>
               </svg>
-            </PinIconContainer>
-          </LeftSection1>
-          <LeftSection2>
+            </PinIcon>
+          </DotsIcon>
+
+          <ImageUploadBox>
             <label
               htmlFor="upload-img"
               id="upload-img-label"
-              style={{
-                display: showLabel ? 'block' : 'none',
-              }}
+              style={{ display: 'block' }}
             >
-              <UploadImgContainer>
-                <div className="dotted-border">
-                  <PinIconContainer>
-                    <svg
-                      height="24"
-                      width="24"
-                      viewBox="0 0 24 24"
-                      aria-label="이미지 또는 동영상 추가"
-                      role="img"
-                    >
-                      <path
-                        d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"
-                        fill="#767676"
-                      ></path>
-                    </svg>
-                  </PinIconContainer>
-                  <DragAndClick>
-                    드래그하거나 클릭하여 업<p>로드</p>
-                  </DragAndClick>
-                </div>
+              <DottedBox>
+                <PinIcon>
+                  <svg
+                    height="24"
+                    width="24"
+                    viewBox="0 0 24 24"
+                    aria-label="이미지 또는 동영상 추가"
+                    role="img"
+                  >
+                    <path
+                      d="M24 12c0-6.627-5.372-12-12-12C5.373 0 0 5.373 0 12s5.373 12 12 12c6.628 0 12-5.373 12-12zm-10.767 3.75a1.25 1.25 0 0 1-2.5 0v-3.948l-1.031 1.031a1.25 1.25 0 0 1-1.768-1.768L12 7l4.066 4.065a1.25 1.25 0 0 1-1.768 1.768l-1.065-1.065v3.982z"
+                      fill="#767676"
+                    ></path>
+                  </svg>
+                </PinIcon>
+                <DragAndClick>
+                  드래그하거나 클릭하여 업<p>로드</p>
+                </DragAndClick>
+              </DottedBox>
+              <Recommendation>
+                Pinterest는 20MB 미만의 고화질 .jpg
+                <p>파일을 사용하는 것을 권장합니다.</p>
+              </Recommendation>
 
-                <Recommendation>
-                  Pinterest는 20MB 미만의 고화질 .jpg
-                  <p>파일을 사용하는 것을 권장합니다.</p>
-                </Recommendation>
-              </UploadImgContainer>
-
-              <input
-                onChange={(event) =>
-                  uploadImg(
-                    event,
-                    savePin,
-                    setSavePin,
-                    setShowLabel,
-                    setShowPin,
-                    setFile
-                  )
-                }
-                type="file"
-                name="upload-img"
-                id="upload-img"
-                value=""
-              />
-            </label>
-            <ShowPin
-              style={{
-                display: showPin ? 'block' : 'none',
-              }}
-            >
               <PinImage>
-                <img src={savePin.imageUrl} alt="pin_image" />
+                <input
+                  type="file"
+                  id="upload-img"
+                  onChange={setFile.bind(this)}
+                  aria-label="파일 업로드"
+                  aria-hidden="false"
+                  tabIndex="0"
+                />
+                {writeImage ? <img src={writeImage} /> : ''}
               </PinImage>
-            </ShowPin>
-          </LeftSection2>
-          <LeftSection3>
+            </label>
+          </ImageUploadBox>
+          <SaveFromSiteBtn>
             <div className="save-from-site">사이트에서 저장</div>
-          </LeftSection3>
-        </LeftSide>
+          </SaveFromSiteBtn>
+        </LeftSection>
 
-        <RightSide>
-          <RightSection1>
+        <RightSection>
+          <SaveContainer>
             <Selectboard>
-              <select defaultValue="Select" name="pin_size" id="pin-size">
-                <option>select</option>
+              <select>
+                <option>board</option>
               </select>
-              <SavePin type="button" onClick={postFile} value="Upload">
+              <SaveButton type="button" value="글쓰기" onClick={writeHandler}>
                 저장
-              </SavePin>
+              </SaveButton>
             </Selectboard>
-          </RightSection1>
-          <RightSection2>
+          </SaveContainer>
+
+          <InputContainer>
             <input
               className="input-title"
-              placeholder="제목 추가"
               type="text"
-              id="pin-title"
-              onChange={onChangeHandler}
+              placeholder="제목 추가"
+              onChange={titleHandler}
             />
             <ProfileImage />
             <input
-              placeholder="사람들에게 회원님의 핀에 대해 설명해 보세요😃"
               type="text"
-              id="pin-desc"
-              onChange={onChangeHandler}
-              maxLength={200}
+              placeholder="사람들에게 회원님의 핀에 대해 설명해 보세요😃"
+              onChange={cententHandler}
             />
             <AddSubTextButton>대체 텍스트 추가</AddSubTextButton>
             <RendingPageLink>
@@ -206,11 +178,9 @@ const PinWrite = () => {
                 id="pin-destination"
               />
             </RendingPageLink>
-          </RightSection2>
-        </RightSide>
-      </AddPinContainer>
+          </InputContainer>
+        </RightSection>
+      </AddPinBox>
     </PinWriteBox>
   );
-};
-
-export default PinWrite;
+}
