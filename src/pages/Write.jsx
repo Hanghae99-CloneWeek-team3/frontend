@@ -1,5 +1,14 @@
-export default function Write(){
+import React from 'react';
+import Header from '../components/header/Header';
+import PinWrite from '../components/pin/PinWrite';
 
+const Write = () => {
+  return (
+    <>
+      <Header />
+      <PinWrite />
+    </>
+  );
+};
 
-  return <h1>Write</h1>
-}
+export default Write;
