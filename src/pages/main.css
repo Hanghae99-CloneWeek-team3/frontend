@@ -6,8 +6,8 @@ body {
 }
 
 .swiper {
-  width: 1727px;
-  height: 890px
+  width: 100vw;
+  height: 92vh;
 }
 
 .swiper-slide {
