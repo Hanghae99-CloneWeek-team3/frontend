@@ -1,5 +1,14 @@
-export default function TotalList(){
+import React from 'react';
+import Header from '../components/header/Header';
+import PinList from '../components/pin/PinList';
 
+const TotalList = () => {
+  return (
+    <>
+      <Header />
+      <PinList />
+    </>
+  );
+};
 
-  return <h1>TotalList</h1>
-}
+export default TotalList;
