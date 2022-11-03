@@ -36,7 +36,7 @@ export default function PinEdit({ closeModal }) {
     closeModal();
     navigator('/totallist');
   }
-
+  console.log(pin)
   return <DivSection>
     <div className="titleBox">
       이 핀 수정하기
@@ -78,7 +78,7 @@ export default function PinEdit({ closeModal }) {
         </DivMenu>
       </DivContentLeft>
       <DivContentRight>
-        <img src='https://i.pinimg.com/474x/1a/b4/ca/1ab4ca4abf215e58f61b48007ab12b39.jpg' />
+        <img src={pin.filePath} />
       </DivContentRight>
     </DivContent>
     <div className="buttonContainer">

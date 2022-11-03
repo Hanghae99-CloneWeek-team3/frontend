@@ -88,7 +88,6 @@ const RegisterForm = ({closeModal, setIsLoginModalOpen, setIsSignupModalOpen, is
                 age:age, })
         )
         .then(response => {
-            // console.log(response.payload.success)
               if (response.payload.success && handleValidation()) {
                 //로그인 모달 열기
                 setIsLoginModalOpen(true);
@@ -99,8 +98,6 @@ const RegisterForm = ({closeModal, setIsLoginModalOpen, setIsSignupModalOpen, is
         
         //회원가입 값 초기화
         setSignupValue(signInit);
-
-        console.log("서버에 회원가입 정보 전송 성공")
     }
     
     return (

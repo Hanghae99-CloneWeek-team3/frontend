@@ -47,10 +47,8 @@ export default function PinWriteTest() {
     axios
       .post('http://13.209.98.109:8080/api/posts/image', formData)
       .then((res) => {
-        console.log(res);
         setwriteImage(res.data.data.imageUrl);
         setFileId(res.data.data.fileId);
-        console.log(typeof res.data.data.imageUrl);
       });
   }
 
@@ -61,14 +59,12 @@ export default function PinWriteTest() {
       imageUrl: writeImage,
       fileId: fileId,
     };
-    console.log(temp);
 
     axios.defaults.headers['Authorization'] = cookie['access_token'];
     axios.defaults.headers['refresh_token'] = cookie['refresh_token'];
     axios.defaults.headers['Content-Type'] = 'application/json';
 
     axios.post('http://13.209.98.109:8080/api/posts', temp).then((res) => {
-      console.log(res);
       if (res.data.success) {
         navigate('/totallist');
       }

@@ -3,9 +3,19 @@ import ProfileImage from '../../profileimage/ProfileImage';
 import DropDown from '../../dropdown/DropDown';
 import DefaultIcon from '../../defaulticon/DefaultIcon';
 import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginedHeader() {
   const [cookie, setCookie, removeCookie] = useCookies();
+  const navigater = useNavigate();
+
+  const logoutHandler = () => {
+    removeCookie('access_token');
+    removeCookie('refresh_token');
+    localStorage.clear();
+    alert('로그아웃되었습니다.');
+    navigater('/');
+  }
 
   const writeMenu = [
     {
@@ -67,16 +77,11 @@ export default function LoginedHeader() {
         }, {
           title: '로그아웃',
           href: '#',
+          onClick: logoutHandler
         }
       ]
     }
   ]
-
-  const logoutHandler = () => {
-    removeCookie('access_token');
-    removeCookie('refresh_token');
-    localStorage.clear();
-  }
 
   return <>
     <DivHeaderSection>
