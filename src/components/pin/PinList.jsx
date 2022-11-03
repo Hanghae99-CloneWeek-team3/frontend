@@ -1,12 +1,15 @@
 import React from 'react';
 import Pin from './Pin';
 
-function PinList() {
+function PinList({ pins }) {
+
+  console.log(pins)
+
   return (
     <div style={styles.pin_container}>
-      <Pin size="small" />
-      <Pin size="medium" />
-      <Pin size="large" />
+      {pins.map(pin => {
+        return <Pin key={pin.postId} pin={pin} />
+      })}
     </div>
   );
 }
