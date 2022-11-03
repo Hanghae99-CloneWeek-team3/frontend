@@ -1,24 +1,17 @@
-
 import React from 'react';
 import { useState, useEffect } from 'react';
-
 const Pin = (props) => {
-  
-
-  const image = new Image;
-  image.src=props.pin?.filePath;
-  const [ size, setSize ] = useState();
-
+  const image = new Image();
+  image.src = props.pin?.filePath;
+  const [size, setSize] = useState();
   const ratio = image.width / image.height;
-
   useEffect(() => {
-    if(ratio >= 0.77) setSize('small')
-    else if (ratio <= 0.54 ) setSize('medium')
+    if (ratio >= 0.77) setSize('small');
+    else if (ratio <= 0.54) setSize('medium');
     else {
-      setSize('large') 
+      setSize('large');
     }
-  }, [])
-  
+  }, []);
   return (
     <div
       style={{
@@ -26,7 +19,9 @@ const Pin = (props) => {
         ...styles[size],
       }}
     >
-      <img src={image.src} />
+      <a href={`/detail/${props.pin.postId}`}>
+        <img src={image.src} />
+      </a>
     </div>
   );
 };
@@ -36,7 +31,6 @@ const styles = {
     margin: '15px 10px',
     padding: 0,
     borderRadius: '16px',
-    backgroundColor: 'pink',
   },
   small: {
     gridRowEnd: 'span 26',
@@ -48,5 +42,4 @@ const styles = {
     gridRowEnd: 'span 45',
   },
 };
-
 export default Pin;
