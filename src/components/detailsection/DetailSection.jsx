@@ -44,7 +44,8 @@ export default function DetailSection({ openModal, postId }) {
   const isWideImage = image.width >= IMAGE_WIDE_SIZE;
   const isLongImage = image.width < image.height;
   const isLogined = cookie['access_token'] && cookie['refresh_token'];
-  // const isLogined = true;
+  const isMyPin = localStorage.getItem('uniqueName') === pin.uniqueName;
+
   const loginedMenus = [
     {
       menu: [
@@ -137,7 +138,7 @@ export default function DetailSection({ openModal, postId }) {
           <div className='headerbox'>
             <div>
               <DivIconBox size='48'>
-                <DropDown size='210px' menus={loginedMenus}>
+                <DropDown size='210px' menus={isMyPin ? loginedMenus : menus}>
                   <svg height="20" width="20" viewBox="0 0 24 24" aria-hidden="true" aria-label role="img">
                     <path d="M12 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3M3 9c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm18 0c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"></path>
                   </svg>
