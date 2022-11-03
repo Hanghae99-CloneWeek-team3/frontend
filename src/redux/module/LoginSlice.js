@@ -4,10 +4,8 @@ import instanceJSon from "../../shared/Request";
 export const addUserThunk = createAsyncThunk(
     "ADD_USER",
     async (payload, thunkAPI) => {
-      console.log(payload);
       try {
         const { data } = await instanceJSon.post("/api/users/signup", payload);
-        //console.log(data.date);
         if (data.success === false) alert("중복된 이메일입니다.");
         return thunkAPI.fulfillWithValue(data);
       } catch (error) {

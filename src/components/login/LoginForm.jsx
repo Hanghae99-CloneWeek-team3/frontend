@@ -36,7 +36,7 @@ const LoginForm = ({closeModal, setIsLoginModalOpen, setIsSignupModalOpen, isSig
         .then ((response) => {
 
             // refreshToken을 setCookie로 쿠키에 저장
-            setCookie('refresh_token', response.request.getResponseHeader('refresh-token'))
+            setCookie('refresh_token', response.request.getResponseHeader('refresh_token'))
             setCookie('access_token', response.request.getResponseHeader('authorization'))
 
             //로컬스토리지
@@ -59,8 +59,6 @@ const LoginForm = ({closeModal, setIsLoginModalOpen, setIsSignupModalOpen, isSig
 
         //로그인 모달 닫기
         setIsLoginModalOpen(false);
-
-        console.log("서버에 로그인 정보 전송 성공")
         
     }
 
