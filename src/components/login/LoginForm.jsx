@@ -36,7 +36,7 @@ const LoginForm = ({closeModal, setIsLoginModalOpen, setIsSignupModalOpen, isSig
         .then ((response) => {
 
             // refreshToken을 setCookie로 쿠키에 저장
-            setCookie('refresh_token', response.request.getResponseHeader('refresh-token'))
+            setCookie('refresh_token', response.request.getResponseHeader('refresh_token'))
             setCookie('access_token', response.request.getResponseHeader('authorization'))
 
             //로컬스토리지
