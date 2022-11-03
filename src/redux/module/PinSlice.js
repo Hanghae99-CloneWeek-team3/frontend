@@ -68,10 +68,8 @@ export const __putPin = createAsyncThunk(
 export const __deletePin = createAsyncThunk(
   'pin/deletePin',
   async (payload, thunkAPI) => {
-    console.log('여기');
     try {
       const { data } = await instance.delete(`api/posts/${payload.postId}`)
-      console.log(data)
       return thunkAPI.fulfillWithValue();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -83,7 +81,6 @@ export const __deletePin = createAsyncThunk(
 export const __writePin = createAsyncThunk(
   'pin/writePin',
   async (payload, thunkAPI) => {
-    console.log(payload);
     try {
       const { data } = await axios.post(
         'https://week3-board.herokuapp.com/posts',

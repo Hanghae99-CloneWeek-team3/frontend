@@ -31,9 +31,6 @@ export const __getComments = createAsyncThunk(
         data.data.map(async (comment) => {
           const totalRecomments = await instance.get(`api/comments/${payload.postId}?size=20&page=0&keyword=comment&commentId=${comment.commentId}`)
           const recomments = await instance.get(`api/comments/${payload.postId}?size=20&page=0&keyword=comment&commentId=${comment.commentId}`)
-          console.log(payload.postId)
-          console.log(comment.commentId)
-          console.log(recomments)
           obj[comment.commentId] = {
             comment: comment,
             recomments: recomments.data.data,
@@ -134,7 +131,6 @@ const commentSlice = createSlice({
       state.isLoading = true;
     },
     [__getComments.fulfilled]: (state, action) => {
-      console.log(action.payload)
       state.comments = action.payload;
       state.isLoading = false;
     },
@@ -157,7 +153,6 @@ const commentSlice = createSlice({
     },
     [__writeComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log(action.payload)
       state.comments = {
         ...state.comments,
         [action.payload.commentId]: {

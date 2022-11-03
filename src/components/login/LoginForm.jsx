@@ -59,8 +59,6 @@ const LoginForm = ({closeModal, setIsLoginModalOpen, setIsSignupModalOpen, isSig
 
         //로그인 모달 닫기
         setIsLoginModalOpen(false);
-
-        console.log("서버에 로그인 정보 전송 성공")
         
     }
 
