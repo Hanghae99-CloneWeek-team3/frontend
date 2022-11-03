@@ -1,6 +1,6 @@
 import React from "react";
-import LoginForm from "../components/Login";
-import SignupForm from "../components/Signup";
+import LoginForm from "../components/login/LoginForm.jsx";
+import SignupForm from "../components/login/RegisterForm.jsx";
 
 const Modal = ({
   text,

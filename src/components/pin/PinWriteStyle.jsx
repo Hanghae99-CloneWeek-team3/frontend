@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const PinWriteBox = styled.form`
+export const PinWriteBox = styled.div`
   width: 100%;
   height: 91%;
   margin-top: 42.5px;
@@ -12,7 +12,7 @@ export const PinWriteBox = styled.form`
   background-color: rgba(0, 0, 0, 0.1);
 `;
 
-export const AddPinContainer = styled.div`
+export const AddPinBox = styled.div`
   padding: 40px;
   width: 880px;
   height: 650px;
@@ -29,11 +29,10 @@ export const AddPinContainer = styled.div`
   background-color: white;
 `;
 
-export const PinIconContainer = styled.div`
+export const PinIcon = styled.div`
   width: 32px;
   height: 32px;
   border-radius: 50%;
-
 
   display: flex;
   justify-content: center;
@@ -47,26 +46,89 @@ export const PinIconContainer = styled.div`
   }
 `;
 
-export const UploadImgContainer = styled.div`
-  padding: 15px;
-  width: 271px;
-  height: 454px;
-  border-radius: 8px;
+export const LeftSection = styled.div`
+  padding: 20px;
+  width: 311px;
+  height: 510px;
+`;
 
+export const DotsIcon = styled.div`
+  width: 100%;
+  height: 8%;
+`;
+
+export const ImageUploadBox = styled.div`
+  padding: 0px 10px;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
   background-color: #efefef;
 
-  .dotted-border {
+  #upload-img-label {
     width: 100%;
-    height: 80%;
-    border-radius: 8px;
-    border: 2px dashed #dadada;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+    height: 100%;
+    cursor: pointer;
   }
+
+  #upload-img-label input {
+    width: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+`;
+
+export const DottedBox = styled.div`
+  width: 100%;
+  height: 80%;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 2px dashed #dadada;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
+export const PinImage = styled.div`
+  position: relative;
+  top: -95%;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const SaveButton = styled.button`
+  width: 30%;
+  height: 100%;
+  border: none;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  color: white;
+  background-color: #e60023;
+  cursor: pointer;
+  &:active {
+    margin-top: 5px;
+  }
+
+  transition-duration: 0.1s;
 `;
 
 export const DragAndClick = styled.div`
@@ -77,64 +139,18 @@ export const DragAndClick = styled.div`
 
 export const Recommendation = styled.div`
   font-size: 12px;
-  margin-top: 35px;
+  margin-top: 27px;
 
   text-align: center;
 `;
 
 export const ShowPin = styled.div`
-  width: 252px;
-  height: 512px;
-  border-radius: 16px;
+  height: 100%;
   position: relative;
   overflow: hidden;
-  display: none;
 `;
 
-export const PinImage = styled.div`
-  width: 100%;
-  height: 100%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const LeftSide = styled.div`
-  padding: 20px;
-  width: 311px;
-  height: 510px;
-`;
-
-export const LeftSection1 = styled.div`
-  width: 100%;
-  height: 8%;
-`;
-
-export const LeftSection2 = styled.div`
-  padding: 0px 10px;
-  width: 100%;
-  height: 100%;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  #upload-img-label {
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-  }
-
-  #upload-img-label input {
-    width: 100%;
-    height: 5%;
-    opacity: 0;
-  }
-`;
-
-export const LeftSection3 = styled.div`
+export const SaveFromSiteBtn = styled.div`
   width: 100%;
   height: 10%;
 
@@ -146,7 +162,7 @@ export const LeftSection3 = styled.div`
     width: 271px;
     height: 48px;
     border-radius: 22px;
-    margin-left: 15px;
+    margin-top: 20px;
 
     display: flex;
     justify-content: center;
@@ -160,16 +176,23 @@ export const LeftSection3 = styled.div`
     &:hover {
       filter: brightness(0.9);
     }
+
+    &:active {
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+
+    transition-duration: 0.1s;
   }
 `;
 
-export const RightSide = styled.div`
+export const RightSection = styled.div`
   padding: 20px;
   width: 100%;
   height: 100%;
 `;
 
-export const RightSection1 = styled.div`
+export const SaveContainer = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
@@ -193,26 +216,7 @@ export const Selectboard = styled.div`
   }
 `;
 
-export const SavePin = styled.button`
-  width: 30%;
-  height: 100%;
-  border: none;
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  font-size: 16px;
-  font-weight: 700;
-
-  color: white;
-  background-color: #e60023;
-  cursor: pointer;
-`;
-
-export const RightSection2 = styled.div`
+export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -257,6 +261,12 @@ export const AddSubTextButton = styled.div`
   &:hover {
     filter: brightness(0.9);
   }
+
+  &:active {
+    margin-left: 5px;
+  }
+
+  transition-duration: 0.1s;
 `;
 
 export const RendingPageLink = styled.div`
