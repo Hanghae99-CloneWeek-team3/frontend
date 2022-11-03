@@ -1,17 +1,14 @@
 import axios from "axios";
 import { Cookies } from "react-cookie";
 
-//요청에 credential 정보 담아서 보낼지
-//쿠키를 첨부해 보내거나 헤더에 authorization 요청 있을 때
+const token = new Cookies().get("token");
+const refreshToken = new Cookies().get("refreshToken");
 
-const access_token = new Cookies().get("access_token");
-const refresh_token = new Cookies().get("refresh_token");
-
-axios.defaults.headers.common['Authorization'] = `${access_token}`
-axios.defaults.headers.common['refresh_token'] = `${refresh_token}`
+axios.defaults.headers.common['Authorization'] = `${token}`
+axios.defaults.headers.common['Refresh-Token'] = `${refreshToken}`
 
 const instanceJSon = axios.create({
-baseURL: "http://13.209.98.109:8080",
+baseURL: "http://week3-board.herokuapp.com/",
 headers: {
 'Content-Type': 'application/json',
 }
