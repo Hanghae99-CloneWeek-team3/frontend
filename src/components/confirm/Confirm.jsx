@@ -1,5 +1,4 @@
 import { DivSection } from './style'
-import DefaultModal from '../defaultmodal/DefaultModel'
 import DefaultButton from '../defaultbutton/DefaultButton'
 
 export default function Confirm({title='정말 삭제하시겠어요?', content='변경 사항이 삭제됩니다.', closeModal, clearInput}) {

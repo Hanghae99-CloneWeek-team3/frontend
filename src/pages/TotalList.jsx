@@ -1,13 +1,17 @@
 import React from 'react';
-import Header from '../components/header/Header';
+import Header from '../components/header/header/Header';
+import LoginedHeader from '../components/header/loginedheader/LoginedHeader';
+import { useCookies } from 'react-cookie';
 import PinList from '../components/pin/PinList';
 
 const TotalList = () => {
   const [cookie] = useCookies();
+  const isLogined = cookie['refresh_token'] && cookie['access_token'];
+
   return (
     <>
-      <Header />
-      <PinList />
+      {isLogined ? <LoginedHeader /> : <Header />}
+      {/* <PinList /> */}
     </>
   );
 };
