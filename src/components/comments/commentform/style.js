@@ -59,4 +59,5 @@ export const DivButtonWrap = styled.div`
   display: flex;
   gap: 5px;
   justify-content: flex-end;
+  margin-top: 10px;
 `
