@@ -44,7 +44,6 @@ const GlobalStyle = createGlobalStyle`
   // Box sizing
   html{
     box-sizing: border-box;
-    font-family: segoe-ui;
   }
     
   *{
