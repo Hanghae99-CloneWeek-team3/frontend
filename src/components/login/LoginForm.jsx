@@ -31,7 +31,7 @@ const LoginForm = ({closeModal, setIsLoginModalOpen, setIsSignupModalOpen, isSig
             "password": password
         }
 
-        const data = instanceJSon.post('api/users/login', temp)
+        const data = instanceJSon.post('/api/users/login', temp)
         
         .then ((response) => {
 

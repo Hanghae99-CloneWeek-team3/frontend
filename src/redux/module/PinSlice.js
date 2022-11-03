@@ -26,7 +26,7 @@ export const __getPins = createAsyncThunk(
   'pin/getPins',
   async (payload, thunkAPI) => {
     try {
-      const { data } = await instance.get('api/posts');      
+      const { data } = await instanceJSon.get('/api/posts');      
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -39,7 +39,7 @@ export const __getPin = createAsyncThunk(
   'pin/getPin',
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get(`http://13.209.98.109:8080/api/posts/${payload}`);
+      const { data } = await instanceJSon.get(`/api/posts/${payload}`);
       if (!data.success) throw new Error(data.error)
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -53,7 +53,7 @@ export const __putPin = createAsyncThunk(
   'pin/putPin',
   async (payload, thunkAPI) => {
     try {
-      const { data } = await instance.put(`api/posts/${payload.postId}`, {
+      const { data } = await instanceJSon.put(`/api/posts/${payload.postId}`, {
         title: payload.title,
         content: payload.content
       })
@@ -69,7 +69,7 @@ export const __deletePin = createAsyncThunk(
   'pin/deletePin',
   async (payload, thunkAPI) => {
     try {
-      const { data } = await instance.delete(`api/posts/${payload.postId}`)
+      const { data } = await instanceJSon.delete(`/api/posts/${payload.postId}`)
       return thunkAPI.fulfillWithValue();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

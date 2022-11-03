@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import instance from '../../shared/Request';
+import instanceJSon from '../../shared/Request';
 
 const initialState = {
   comments: {
@@ -23,14 +23,14 @@ export const __getComments = createAsyncThunk(
   'comment/getComments',
   async (payload, thunkAPI) => {
     try {
-      const comments = await instance.get(`api/comments/${payload.postId}?size=20&page=0`);
-      const { data } = await instance.get(`api/comments/${payload.postId}?size=20&page=${payload.page}`);
+      const comments = await instanceJSon.get(`/api/comments/${payload.postId}?size=20&page=0`);
+      const { data } = await instanceJSon.get(`/api/comments/${payload.postId}?size=20&page=${payload.page}`);
 
       let obj = {};
       const result = await Promise.all(
         data.data.map(async (comment) => {
-          const totalRecomments = await instance.get(`api/comments/${payload.postId}?size=20&page=0&keyword=comment&commentId=${comment.commentId}`)
-          const recomments = await instance.get(`api/comments/${payload.postId}?size=20&page=0&keyword=comment&commentId=${comment.commentId}`)
+          const totalRecomments = await instanceJSon.get(`/api/comments/${payload.postId}?size=20&page=0&keyword=comment&commentId=${comment.commentId}`)
+          const recomments = await instanceJSon.get(`/api/comments/${payload.postId}?size=20&page=0&keyword=comment&commentId=${comment.commentId}`)
           obj[comment.commentId] = {
             comment: comment,
             recomments: recomments.data.data,
@@ -74,8 +74,8 @@ export const __writeComment = createAsyncThunk(
   'comment/writeComment',
   async (payload, thunkAPI) => {
     try {
-      const data = await instance.post(`api/comments`, payload)
-      const { data: newComment } = await instance.get(`api/comments/find/${data.data.data.data}`);
+      const data = await instanceJSon.post(`/api/comments`, payload)
+      const { data: newComment } = await instanceJSon.get(`api/comments/find/${data.data.data.data}`);
       return thunkAPI.fulfillWithValue(newComment.data[0]);
     } catch (error) {
 
@@ -100,8 +100,8 @@ export const __putComment = createAsyncThunk(
   'comment/putComment',
   async (payload, thunkAPI) => {
     try {
-      await instance.put(`api/comments/${payload.commentId}`, payload.contents);
-      const { data } = await instance.get(`api/comments/find/${payload.commentId}`);
+      await instanceJSon.put(`/api/comments/${payload.commentId}`, payload.contents);
+      const { data } = await instanceJSon.get(`/api/comments/find/${payload.commentId}`);
       return thunkAPI.fulfillWithValue(data.data[0]);
     } catch (error) {
 

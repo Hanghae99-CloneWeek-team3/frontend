@@ -8,7 +8,6 @@ import CommentForm from "../commentform/CommentForm";
 import Heart from "../heart/Heart";
 import DefaultIcon from "../../defaulticon/DefaultIcon";
 import instanceJSon from "../../../shared/Request";
-import instance from "../../../shared/Request";
 import { useSelector } from "react-redux";
 
 // styled Components 
@@ -52,7 +51,7 @@ export default function Comment({ comment }) {
   }
 
   async function onClickDelete() {
-    await instance.delete(`api/comments/${comment.commentId }`);
+    await instanceJSon.delete(`/api/comments/${comment.commentId }`);
     window.location.reload();
   }
 

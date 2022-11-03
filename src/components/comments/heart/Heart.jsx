@@ -12,11 +12,11 @@ export default function Heart({ commentId, liked=false, numberLike}){
   // function
   function onClickHeart(){
     if(isLiked){
-      instance.delete(`api/comments/likes/${commentId}`)
+      instanceJSon.delete(`/api/comments/likes/${commentId}`)
       setIsLiked(false)
       setCountLike(countLike - 1)
     } else {
-      instance.post(`api/comments/likes/${commentId}`)
+      instanceJSon.post(`/api/comments/likes/${commentId}`)
       setIsLiked(true)
       setCountLike(countLike + 1)
     } 
