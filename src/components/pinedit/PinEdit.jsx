@@ -32,6 +32,7 @@ export default function PinEdit({ closeModal }) {
 
   const deleteHandler = () => {
     dispatch(__deletePin({postId: pin.postId}));
+    alert('삭제되었습니다.');
     closeModal();
     navigator('/totallist');
   }
