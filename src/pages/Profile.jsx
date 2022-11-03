@@ -13,7 +13,12 @@ export default function Profile(){
     profileImage: 'https://i.pinimg.com/564x/2e/7b/9f/2e7b9ff81c0af98a9769b85bd6035575.jpg',
     userName: 'Minjoo Kim',
     uniqueName: 'roses16dev',
+  }
 
+
+  const temp = {
+    userId: 'test16@naver.com',
+    password: 'qwer1234!'
   }
 
   return <>
