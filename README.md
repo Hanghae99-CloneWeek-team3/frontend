@@ -11,7 +11,6 @@ https://www.notion.so/3-3634a4bbc8bb422fb147b96e99db10e1
 - Pin CRUD
 - Comment CRUD
 - 반응형 웹
-- Infinite scroll
 
 ## 📌 사용한 기술
 ![](https://img.shields.io/badge/-Redux-red?logo=Redux)
