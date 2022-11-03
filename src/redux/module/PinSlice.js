@@ -1,5 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import instance from '../../shared/Request';
+import { useCookies } from 'react-cookie';
+
 
 const initialState = {
   pins: [], // /api/posts/all
@@ -23,7 +26,8 @@ export const __getPins = createAsyncThunk(
   'pin/getPins',
   async (payload, thunkAPI) => {
     try {
-      return thunkAPI.fulfillWithValue();
+      const { data } = await instance.get('api/posts');      
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -35,7 +39,9 @@ export const __getPin = createAsyncThunk(
   'pin/getPin',
   async (payload, thunkAPI) => {
     try {
-      return thunkAPI.fulfillWithValue();
+      const { data } = await axios.get(`http://13.209.98.109:8080/api/posts/${payload}`);
+      if (!data.success) throw new Error(data.error)
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -47,6 +53,10 @@ export const __putPin = createAsyncThunk(
   'pin/putPin',
   async (payload, thunkAPI) => {
     try {
+      const { data } = await instance.put(`api/posts/${payload.postId}`, {
+        title: payload.title,
+        content: payload.content
+      })
       return thunkAPI.fulfillWithValue();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -58,7 +68,10 @@ export const __putPin = createAsyncThunk(
 export const __deletePin = createAsyncThunk(
   'pin/deletePin',
   async (payload, thunkAPI) => {
+    console.log('여기');
     try {
+      const { data } = await instance.delete(`api/posts/${payload.postId}`)
+      console.log(data)
       return thunkAPI.fulfillWithValue();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -76,8 +89,7 @@ export const __writePin = createAsyncThunk(
         'https://week3-board.herokuapp.com/posts',
         payload
       );
-      console.log(data);
-      return thunkAPI.fulfillWithValue(data);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -94,6 +106,7 @@ const pinSlice = createSlice({
       state.isLoading = true;
     },
     [__getPins.fulfilled]: (state, action) => {
+      state.pins = action.payload;
       state.isLoading = false;
     },
     [__getPins.rejected]: (state, action) => {
@@ -105,6 +118,7 @@ const pinSlice = createSlice({
       state.isLoading = true;
     },
     [__getPin.fulfilled]: (state, action) => {
+      state.pin = action.payload;
       state.isLoading = false;
     },
     [__getPin.rejected]: (state, action) => {
