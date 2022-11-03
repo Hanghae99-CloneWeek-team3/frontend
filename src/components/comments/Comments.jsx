@@ -9,7 +9,7 @@ import CommentForm from "./commentform/CommentForm";
 import ProfileImage from "../profileimage/ProfileImage";
 import Loading from "../loading/Loading";
 import DefaultButton from "../defaultbutton/DefaultButton";
-
+import instanceJSon from "../../shared/Request";
 // style
 import { DivCommentSection, DivCommentHeader, DivComments, DivRecomments, DivCommentForm } from './style'
 
@@ -21,7 +21,6 @@ export default function Comments({ postId }) {
 
   const dispatch = useDispatch();
   const { comments, isLoading, error, numberComments } = useSelector(state => state.CommentSlice);
-  console.log(comments)
   const toggleComments = () => {
     setOpenComments(!openComments);
   }

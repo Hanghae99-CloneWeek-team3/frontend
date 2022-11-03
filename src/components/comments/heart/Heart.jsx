@@ -1,7 +1,8 @@
 // components
 import DefaultIcon from "../../defaulticon/DefaultIcon";
-import instance from "../../../shared/Request";
+import instanceJSon from "../../../shared/Request";
 import { useState } from 'react';
+
 // style
 import { DivHeartBox, DivHeart, SpanNumberHeart } from "./style";
 

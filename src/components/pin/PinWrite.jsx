@@ -25,7 +25,7 @@ import {
 import ProfileImage from '../profileimage/ProfileImage';
 import { useNavigate } from 'react-router-dom';
 import { includes } from 'lodash';
-import instan
+import instanceJSon from '../../shared/Request';
 
 export default function PinWriteTest() {
   const [cookie, setCookie] = useCookies();
@@ -47,7 +47,7 @@ export default function PinWriteTest() {
     axios.defaults.headers['Content-Type'] = 'multipart/form-data';
 
     axios
-      .post('https://pinteresting.site/api/posts/image', formData)
+      .post(`https://pinteresting.site/api/posts/image`, formData)
       .then((res) => {
         setwriteImage(res.data.data.imageUrl);
         setFileId(res.data.data.fileId);

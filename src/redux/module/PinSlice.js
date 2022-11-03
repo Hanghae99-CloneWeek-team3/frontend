@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import instance from '../../shared/Request';
+import instanceJSon from '../../shared/Request';
 import { useCookies } from 'react-cookie';
 
 
