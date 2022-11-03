@@ -9,6 +9,11 @@ export default function DropDown({children, menus, size, alignRight=false}){
   const toggleOpen = () => {
     setIsOpen(!isOpen)
   }
+
+  const closeMenu = (menuFunction) => {
+    menuFunction()
+    setIsOpen(false)
+  }
   
   return <>
   <a href="#" onClick={toggleOpen}>{children}</a>
@@ -18,7 +23,7 @@ export default function DropDown({children, menus, size, alignRight=false}){
       const menuKeys = new Array(menuForder.menu.length).fill(1).map((key, index) => key + index);
       return <DivMenuLine style={{flexDirection: 'column'}} key={keys[index]}>{ menuForder.category ? <DivCategoryBox>{menuForder.category}</DivCategoryBox> : <div></div> }
         {menuForder.menu.map((oneMenu, index) => {
-          return <a href={oneMenu.href || '#'} onClick={oneMenu.onClick} key={menuKeys[index]}><DivMenuBox>{oneMenu.title}</DivMenuBox></a>
+          return <a href={oneMenu.href || '#'} onClick={() => closeMenu(oneMenu.onClick)} key={menuKeys[index]}><DivMenuBox>{oneMenu.title}</DivMenuBox></a>
         })}
         </DivMenuLine>
       })
