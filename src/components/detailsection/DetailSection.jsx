@@ -1,70 +1,133 @@
-import { DivSection, DivDetailBox, DivLeftBox, DivRightBox, DivImageBox, DivInfoBox, DivIconBox, DivHeaderBox } from './style';
+// library & package & hook
+import React from 'react';
+import { useEffect, useState } from 'react';
+import { throttle } from 'lodash';
+import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import { useDispatch, useSelector } from 'react-redux';
+
+// actions
+import { __getPin } from '../../redux/module/PinSlice';
+
+// components
 import Comments from '../comments/Comments';
 import DefaultButton from '../defaultbutton/DefaultButton';
 import DefaultIcon from '../defaulticon/DefaultIcon';
 import DropDown from '../dropdown/DropDown';
 import ProfileImage from '../profileimage/ProfileImage';
-import { useEffect, useState } from 'react';
-import { throttle } from 'lodash';
-import { useNavigate } from 'react-router-dom';
+import Loading from '../loading/Loading';
 
+import Modal from '../defaultmodal/Modal'
+import ModalPortal from '../defaultmodal/portal'
 
-export default function DetailSection(){
+import PinEdit from '../pinedit/PinEdit';
+
+// style
+import { DivSection, DivDetailBox, DivLeftBox, DivRightBox, DivImageBox, DivInfoBox, DivIconBox, DivHeaderBox } from './style';
+import Profile from '../../pages/Profile';
+
+export default function DetailSection({ openModal, postId }) {
+  // variables
   const SECTION_WIDE_SIZE = 1020;
   const IMAGE_WIDE_SIZE = 508;
   const THROTTLE_WAIT = 200;
-  
-  const navigator = useNavigate();
 
-  const [ isWide, setIsWide] = useState(window.innerWidth > SECTION_WIDE_SIZE);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [cookie, setCookie, removeCookie] = useCookies();
+  const navigator = useNavigate();
+  const dispatch = useDispatch();
+
+  const { isLoading, error, pin } = useSelector((state) => state.PinSlice);
+  const [isWide, setIsWide] = useState(window.innerWidth > SECTION_WIDE_SIZE);
   const image = new Image();
-  image.src='https://i.pinimg.com/564x/44/92/bd/4492bda2d6b2b8fedd2d4126259d7afa.jpg';
+  image.src = pin.filePath;
   const isWideImage = image.width >= IMAGE_WIDE_SIZE;
   const isLongImage = image.width < image.height;
+  const isLogined = cookie['access_token'] && cookie['refresh_token'];
+  const isMyPin = localStorage.getItem('uniqueName') === pin.uniqueName;
+
+  const loginedMenus = [
+    {
+      menu: [
+        {
+          title: '핀 수정',
+          href: '#',
+          onClick: openEditHandler
+        },
+        {
+          title: '이미지 다운로드',
+          href: '#'
+        },
+        {
+          title: '핀 신고',
+          href: '#'
+        },
+        {
+          title: '핀 임베드 코드 가져오기',
+          href: '#'
+        }
+      ]
+    }
+  ]
 
   const menus = [
-    {  
-      menu : [
-      {
-        title: '핀 수정',
-        href: '#'
-      },
-      {
-        title: '이미지 다운로드',
-        href: '#'
-      },
-      {
-        title: '핀 신고',
-        href: '#'
-      },
-      {
-        title: '핀 임베드 코드 가져오기',
-        href: '#'
-      }
-    ]}
+    {
+      menu: [
+        {
+          title: '이미지 다운로드',
+          href: '#'
+        },
+        {
+          title: '핀 숨기기',
+          href: '#'
+        },
+        {
+          title: '핀 신고',
+          href: '#'
+        },
+        {
+          title: '핀 임베드 코드 가져오기',
+          href: '#'
+        }
+      ]
+    }
   ]
-  
+
+  function openEditHandler(event){
+    setModalOpen(true);
+  }
+
+  const closeEditHandler = (event) => {
+    setModalOpen(false);
+
+  }
+
 
   const sectionClickHandler = (event) => {
     event.stopPropagation()
     navigator('/totallist');
-    
 
     // 본인 게시물일 경우 profile
   }
 
   const checkSizeHandler = throttle(() => {
-    if(window.innerWidth < SECTION_WIDE_SIZE) setIsWide(false);
-    if(window.innerWidth >= SECTION_WIDE_SIZE) setIsWide(true);
+    if (window.innerWidth < SECTION_WIDE_SIZE) setIsWide(false);
+    if (window.innerWidth >= SECTION_WIDE_SIZE) setIsWide(true);
   }, THROTTLE_WAIT)
 
   useEffect(() => {
-    window.addEventListener('resize',checkSizeHandler, false);
+    window.addEventListener('resize', checkSizeHandler, false);
   }, [])
 
-  // need to : wide, narrow mode 각각 설정하기
-  return <DivSection onClick={sectionClickHandler}> 
-    <DivDetailBox isWide={isWide} onClick={(event) => {event.stopPropagation()}}>
+  useEffect(() => {
+    dispatch(__getPin(postId));
+  }, [dispatch])
+
+
+  if (isLoading) <Loading />
+
+  return <DivSection onClick={sectionClickHandler}>
+    <DivDetailBox isWide={isWide} onClick={(event) => { event.stopPropagation() }}>
       <DivLeftBox>
         <DivImageBox isWide={isWide} isWideImage={isWideImage} isLongImage={isLongImage}>
           <img src={image.src} />
@@ -75,7 +138,7 @@ export default function DetailSection(){
           <div className='headerbox'>
             <div>
               <DivIconBox size='48'>
-                <DropDown size='210px' menus={menus}>
+                <DropDown size='210px' menus={isMyPin ? loginedMenus : menus}>
                   <svg height="20" width="20" viewBox="0 0 24 24" aria-hidden="true" aria-label role="img">
                     <path d="M12 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3M3 9c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm18 0c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"></path>
                   </svg>
@@ -98,28 +161,32 @@ export default function DetailSection(){
           </div>
 
           <div className='writerbox'>
-            업로드한 사람: <span>Minjoo Kim</span>
+            업로드한 사람: <span>{pin.userName}</span>
           </div>
 
           <div className='titlebox'>
-            Title
+            {pin.title}
           </div>
           <div className='contentbox'>
-            Content
+            {pin.content}
           </div>
           <div className='profilebox'>
             <div>
               <ProfileImage size='48' url='https://i.pinimg.com/564x/61/d4/e9/61d4e9e3c3822777ea96f0c5cceb9d57.jpg' />
             </div>
             <div>
-              <p className='username'>Minjoo Kim</p>
+              <p className='username'>{pin.userName}</p>
               <p>팔로워 0명</p>
             </div>
           </div>
         </DivInfoBox>
-        <Comments />
+        {isLogined ? <Comments postId={postId} /> : ''}
       </DivRightBox>
     </DivDetailBox>
+
+    <ModalPortal>
+      {modalOpen && <Modal onClose={closeEditHandler} content={<PinEdit closeModal={closeEditHandler} />} />}
+    </ModalPortal>
 
   </DivSection>
 }

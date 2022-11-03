@@ -47,6 +47,10 @@ export const DivSearchInputBox = styled.div`
     font-size: 16px;
     background-color: transparent;
     border: none;
+
+    &:focus{
+      outline: none;
+    }
   }
 `
 export const DivTextBox = styled.div`

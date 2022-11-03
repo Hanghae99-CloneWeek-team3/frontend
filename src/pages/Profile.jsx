@@ -1,36 +1,42 @@
 // Library& Package -----------------------------------------
 import styled from 'styled-components';
+import axios from 'axios';
+import { useCookies } from 'react-cookie';
 
 // Components -----------------------------------------------
-import Header from "../components/header/Header"
+import LoginedHeader from "../components/header/loginedheader/LoginedHeader"
+import Header from '../components/header/header/Header';
 import DefaultButton from "../components/defaultbutton/DefaultButton";
 import ProfileImage from "../components/profileimage/ProfileImage"
 
 // need to : API connect
-export default function Profile(){
+export default function Profile() {
+
+  const [cookie, setCookie, removeCookie] = useCookies();
+  const isLogined = cookie['access_token'] && cookie['refresh_token']
 
   const mock = {
     profileImage: 'https://i.pinimg.com/564x/2e/7b/9f/2e7b9ff81c0af98a9769b85bd6035575.jpg',
     userName: 'Minjoo Kim',
     uniqueName: 'roses16dev',
-
   }
 
   return <>
-  <Header />
-  <DivProfileInfoSection>
-    <ProfileImage size='120' url={mock.profileImage} />
-    <h1 style={{fontWeight:600}}>{mock.userName}</h1>
-    <p className='uniquename'>@{mock.uniqueName}</p>
-    <p>- introduce -</p>
-    <p>팔로잉 0명</p>
-    <div className='buttonwrap'>
-      <DefaultButton>공유</DefaultButton>
-      <DefaultButton>프로필 수정</DefaultButton>
-    </div>
-  </DivProfileInfoSection>
-  <Hr/>
+    {isLogined ? <LoginedHeader /> : <Header />}
+    <DivProfileInfoSection>
+      <ProfileImage size='120' url={mock.profileImage} />
+      <h1 style={{ fontWeight: 600 }}>{mock.userName}</h1>
+      <p className='uniquename'>@{mock.uniqueName}</p>
+      <p>- introduce -</p>
+      <p>팔로잉 0명</p>
+      <div className='buttonwrap'>
+        <DefaultButton>공유</DefaultButton>
+        <DefaultButton>프로필 수정</DefaultButton>
+      </div>
+    </DivProfileInfoSection>
+    <Hr />
   </>
+
 }
 
 // Styled Components -----------------------------------------
