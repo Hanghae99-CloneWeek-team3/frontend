@@ -1,4 +1,8 @@
 # Clone coding : Pinterest
+
+## 📌 시연영상
+https://www.youtube.com/watch?v=4v5qQLbUJPo
+
 ## 📌 S.A
 https://www.notion.so/3-3634a4bbc8bb422fb147b96e99db10e1
 
