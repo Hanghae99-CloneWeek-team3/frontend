@@ -1,5 +1,7 @@
 # Clone coding : Pinterest
 
+![image](https://user-images.githubusercontent.com/109853560/215419259-db25aed3-4a88-4557-878f-0c481d635c93.png)
+
 ## 📌 시연영상
 https://www.youtube.com/watch?v=4v5qQLbUJPo
 
